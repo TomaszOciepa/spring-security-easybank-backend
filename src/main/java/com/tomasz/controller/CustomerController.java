@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,7 @@ public class CustomerController {
     public ResponseEntity<String> registerUser(@RequestBody Customer user){
         String hashPwd = passwordEncoder.encode(user.getPwd());
         user.setPwd(hashPwd);
+        user.setDateRegistration(LocalDateTime.now());
         Customer savedUser = userRepository.save(user);
         return ResponseEntity.ok().build();
     }
