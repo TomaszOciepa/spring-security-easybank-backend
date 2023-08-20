@@ -33,8 +33,9 @@ public class ProjectSecurityConfig{
 
         http.csrf((csrf) ->csrf.disable())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("myAccount", "/myBalance", "/myCards", "/myLoans").authenticated()
-                        .requestMatchers("/notices", "/contact", "/users", "/register").permitAll())
+                        .requestMatchers("myAccount", "/myBalance", "/myCards").authenticated()
+                        .requestMatchers("/myLoans").hasRole("ADMIN")
+                        .requestMatchers("/notices", "/contact", "/users", "/register", "/api/events", "/api/test").permitAll())
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
         return http.build();
